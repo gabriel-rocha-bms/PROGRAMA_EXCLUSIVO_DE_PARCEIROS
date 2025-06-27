@@ -179,16 +179,20 @@ class BMSPartnersApp {
         
         if (!value) return true; // Campo opcional
         
-        // Aceita links com ou sem https://
+        // Remove espaços extras e normaliza
+        let normalizedValue = value.replace(/\s+/g, '');
+        
+        // Aceita todos os formatos válidos do LinkedIn
         const linkedinPatterns = [
-            /^https?:\/\/linkedin\.com\/in\/[\w\-]+$/i,
-            /^https?:\/\/www\.linkedin\.com\/in\/[\w\-]+$/i,
-            /^linkedin\.com\/in\/[\w\-]+$/i,
-            /^www\.linkedin\.com\/in\/[\w\-]+$/i,
-            /^[\w\-]+$/i // Apenas o nome do perfil
+            // URLs completas com https://
+            /^https?:\/\/(www\.)?linkedin\.com\/in\/[\w\-]+\/?$/i,
+            // URLs sem protocolo
+            /^(www\.)?linkedin\.com\/in\/[\w\-]+\/?$/i,
+            // Apenas o nome do perfil (sem linkedin.com)
+            /^[\w\-]+$/i
         ];
         
-        const isValid = linkedinPatterns.some(pattern => pattern.test(value));
+        const isValid = linkedinPatterns.some(pattern => pattern.test(normalizedValue));
         
         if (!isValid) {
             this.showFieldError(field, 'Digite um perfil do LinkedIn válido (ex: linkedin.com/in/seu-perfil)');

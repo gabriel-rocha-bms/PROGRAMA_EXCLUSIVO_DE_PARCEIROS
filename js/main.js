@@ -430,7 +430,7 @@ class BMSPartnersApp {
             indicacoes: document.getElementById('indicacoes').value
         };
 
-        const btn = e.target.querySelector("button[type='submit']");
+            const btn = e.target.querySelector("button[type='submit']");
         const originalText = btn.textContent;
         
         console.log('Botão encontrado:', btn);
@@ -484,7 +484,7 @@ class BMSPartnersApp {
             
             // Restaura o botão após 3 segundos
             setTimeout(() => {
-                btn.disabled = false;
+            btn.disabled = false;
                 btn.textContent = originalText;
                 btn.style.background = "";
             }, 3000);

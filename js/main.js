@@ -110,7 +110,18 @@ class BMSPartnersApp {
         // Validação especial para telefone
         const phoneField = document.getElementById('telefone');
         if (phoneField) {
-            phoneField.addEventListener('blur', () => this.validatePhone(phoneField));
+            phoneField.addEventListener('blur', () => this.validatePhoneRequired(phoneField));
+            // Validação em tempo real para telefone
+            phoneField.addEventListener('phoneInput', () => {
+                console.log('Telefone phoneInput detectado');
+                this.clearFieldError(phoneField);
+                // Valida após um pequeno delay para não validar a cada tecla
+                clearTimeout(this.phoneValidationTimeout);
+                this.phoneValidationTimeout = setTimeout(() => {
+                    console.log('Executando validação em tempo real do telefone');
+                    this.validatePhone(phoneField);
+                }, 500);
+            });
         }
 
         // Validação de email
@@ -144,19 +155,54 @@ class BMSPartnersApp {
     // Validação específica de telefone
     validatePhone(field) {
         const value = field.value.replace(/\D/g, '');
+        console.log('validatePhone - valor:', value, 'comprimento:', value.length);
         
+        // Se o campo está vazio, não mostra erro ainda (usuário pode estar digitando)
+        if (!value || value.length === 0) {
+            console.log('validatePhone - campo vazio, limpando erro');
+            this.clearFieldError(field);
+            return false;
+        }
+        
+        // Se tem menos de 10 dígitos, mostra erro
         if (value.length < CONFIG.MIN_PHONE_LENGTH) {
+            console.log('validatePhone - muito curto, mostrando erro');
             this.showFieldError(field, `Telefone deve ter pelo menos ${CONFIG.MIN_PHONE_LENGTH} dígitos`);
             return false;
         }
         
+        // Se tem exatamente 10 dígitos, mostra erro (deve ter 11)
+        if (value.length === 10) {
+            console.log('validatePhone - exatamente 10 dígitos, mostrando erro');
+            this.showFieldError(field, `Telefone deve ter ${CONFIG.MAX_PHONE_LENGTH} dígitos (com o 9)`);
+            return false;
+        }
+        
+        // Se tem mais de 11 dígitos, mostra erro
         if (value.length > CONFIG.MAX_PHONE_LENGTH) {
+            console.log('validatePhone - muito longo, mostrando erro');
             this.showFieldError(field, `Telefone deve ter no máximo ${CONFIG.MAX_PHONE_LENGTH} dígitos`);
             return false;
         }
 
+        // Se chegou até aqui, o telefone é válido
+        console.log('validatePhone - telefone válido');
         this.clearFieldError(field);
         return true;
+    }
+
+    // Validação de telefone obrigatório (usado no blur)
+    validatePhoneRequired(field) {
+        const value = field.value.replace(/\D/g, '');
+        console.log('validatePhoneRequired - valor:', value, 'comprimento:', value.length);
+        
+        if (!value || value.length === 0) {
+            console.log('validatePhoneRequired - campo obrigatório vazio');
+            this.showFieldError(field, 'Telefone é obrigatório');
+            return false;
+        }
+        
+        return this.validatePhone(field);
     }
 
     // Validação de email
@@ -253,6 +299,9 @@ class BMSPartnersApp {
             }
             
             e.target.value = value;
+            
+            // Dispara evento customizado para validação
+            e.target.dispatchEvent(new Event('phoneInput', { bubbles: true }));
         });
     }
 
@@ -335,7 +384,7 @@ class BMSPartnersApp {
 
             // Validações específicas
             const phoneField = document.getElementById('telefone');
-            if (phoneField && !this.validatePhone(phoneField)) {
+            if (phoneField && !this.validatePhoneRequired(phoneField)) {
                 isValid = false;
             }
 

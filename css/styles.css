@@ -794,6 +794,40 @@ fieldset {
     box-shadow: none;
 }
 
+/* Loading styles */
+.form-submit.loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+    background: var(--laranja-fechado) !important;
+}
+
+.form-submit.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid var(--branco);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Garantir que o texto fique invisível durante loading */
+.form-submit.loading span,
+.form-submit.loading {
+    color: transparent !important;
+}
+
 /* Contact Info */
 .contact-info {
     margin-top: 40px;

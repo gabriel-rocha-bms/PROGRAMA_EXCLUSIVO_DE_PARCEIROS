@@ -306,10 +306,16 @@ class BMSPartnersApp {
 
     // Envio do formulário
     setupFormSubmission() {
+        console.log('setupFormSubmission iniciado');
         const form = document.getElementById('bms-form');
-        if (!form) return;
+        if (!form) {
+            console.log('Formulário não encontrado!');
+            return;
+        }
+        console.log('Formulário encontrado:', form);
 
         form.addEventListener('submit', async (e) => {
+            console.log('Submit do formulário disparado');
             e.preventDefault();
 
             // Valida todos os campos obrigatórios
@@ -340,7 +346,12 @@ class BMSPartnersApp {
             }
 
             if (!isValid) {
-                alert('Por favor, corrija os erros no formulário antes de enviar.');
+                // Mostra erro no primeiro campo inválido
+                const firstInvalidField = document.querySelector('.form-group input.error, .form-group textarea.error, .form-group select.error');
+                if (firstInvalidField) {
+                    firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalidField.focus();
+                }
                 return;
             }
 
@@ -350,6 +361,7 @@ class BMSPartnersApp {
 
     // Submissão do formulário
     async submitForm(e) {
+        console.log('submitForm iniciado');
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyVYaCbWQV5YT3dD1z5slsYNhYecsYvflzTOgdUzE2DTGsrm6Q_wlx8lxzzqr--z26GJQ/exec';
 
         const formData = {
@@ -365,33 +377,66 @@ class BMSPartnersApp {
             indicacoes: document.getElementById('indicacoes').value
         };
 
+        const btn = e.target.querySelector("button[type='submit']");
+        const originalText = btn.textContent;
+        
+        console.log('Botão encontrado:', btn);
+        console.log('Texto original:', originalText);
+
         try {
-            const btn = e.target.querySelector("button[type='submit']");
+            // Adiciona loading
+            console.log('Adicionando loading...');
             btn.disabled = true;
+            btn.classList.add('loading');
             btn.textContent = "Enviando...";
+            console.log('Loading adicionado, texto:', btn.textContent);
+
+            // Usar FormData para melhor compatibilidade
+            const formDataObj = new FormData();
+            Object.keys(formData).forEach(key => {
+                formDataObj.append(key, formData[key]);
+            });
 
             await fetch(scriptURL, {
                 method: "POST",
                 mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
+                body: formDataObj
             });
 
+            // Simula um tempo mínimo de loading para melhor UX
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Remove loading e mostra sucesso
+            console.log('Removendo loading e mostrando sucesso...');
+            btn.classList.remove('loading');
+            btn.textContent = "✓ Enviado com Sucesso!";
+            btn.style.background = "var(--verde-sucesso)";
+            
+            // Reseta o formulário
+            document.getElementById("bms-form").reset();
+            
+            // Restaura o botão após 3 segundos
             setTimeout(() => {
-                alert("Formulário enviado com sucesso!");
-                document.getElementById("bms-form").reset();
                 btn.disabled = false;
-                btn.textContent = "Quero Ser Parceiro BMS";
-            }, 1000);
+                btn.textContent = originalText;
+                btn.style.background = "";
+                console.log('Botão restaurado');
+            }, 3000);
+
         } catch (error) {
             console.error("Erro ao enviar:", error);
-            alert("Erro ao enviar o formulário. Tente novamente mais tarde.");
             
-            const btn = e.target.querySelector("button[type='submit']");
-            btn.disabled = false;
-            btn.textContent = "Quero Ser Parceiro BMS";
+            // Remove loading e mostra erro
+            btn.classList.remove('loading');
+            btn.textContent = "✗ Erro ao Enviar";
+            btn.style.background = "var(--erro)";
+            
+            // Restaura o botão após 3 segundos
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.background = "";
+            }, 3000);
         }
     }
 
@@ -406,7 +451,9 @@ class BMSPartnersApp {
 
 // Inicializar a aplicação quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
-    new BMSPartnersApp();
+    console.log('DOM carregado, inicializando BMSPartnersApp...');
+    const app = new BMSPartnersApp();
+    console.log('BMSPartnersApp inicializada:', app);
 });
 
 // Utilitários

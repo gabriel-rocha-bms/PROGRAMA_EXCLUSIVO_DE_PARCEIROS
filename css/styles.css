@@ -582,6 +582,7 @@ h2 {
 .comparison-table .others {
     background: rgba(220, 53, 69, 0.1);
     color: var(--erro);
+    font-weight: 600;
 }
 
 /* FAQ */
@@ -868,11 +869,31 @@ fieldset {
     color: var(--azul-escuro);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
 }
 
 .contact-method a:hover {
     color: var(--laranja-vibrante);
+    background: rgba(213, 132, 53, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(213, 132, 53, 0.2);
+}
+
+.contact-method a svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.contact-method a:hover svg {
+    transform: scale(1.1);
 }
 
 footer {

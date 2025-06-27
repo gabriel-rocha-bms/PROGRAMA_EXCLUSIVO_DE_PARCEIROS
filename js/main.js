@@ -395,16 +395,14 @@ class BMSPartnersApp {
             btn.textContent = "Enviando...";
             console.log('Loading adicionado, texto:', btn.textContent);
 
-            // Usar FormData para melhor compatibilidade
-            const formDataObj = new FormData();
-            Object.keys(formData).forEach(key => {
-                formDataObj.append(key, formData[key]);
-            });
-
+            // Usar formato JSON que funciona com Google Apps Script
             await fetch(scriptURL, {
                 method: "POST",
                 mode: "no-cors",
-                body: formDataObj
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
             });
 
             // Simula um tempo mínimo de loading para melhor UX

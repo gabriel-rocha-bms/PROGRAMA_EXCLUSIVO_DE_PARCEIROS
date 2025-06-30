@@ -197,8 +197,8 @@ body {
 
 h1 {
     font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 30px;
+    font-weight: 400;
+    margin-bottom: 24px;
     line-height: 1.1;
     animation: fadeInUp 0.8s ease-out 0.2s both;
 }
@@ -353,6 +353,11 @@ h1 {
 
 .trust-item {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 120px;
 }
 
 .trust-number {
@@ -360,11 +365,18 @@ h1 {
     font-weight: 700;
     color: var(--laranja-vibrante);
     display: block;
+    min-height: 48px;
+    line-height: 1.1;
 }
 
 .trust-label {
     font-size: 0.9rem;
     opacity: 0.8;
+    display: block;
+    max-width: 180px;
+    word-break: break-word;
+    white-space: normal;
+    margin: 0 auto;
 }
 
 /* Section Styles */
@@ -1364,4 +1376,10 @@ footer {
         width: 100%;
         min-width: 0;
     }
+}
+
+.parceirobms-destaque {
+    color: var(--laranja-vibrante);
+    
+    font-weight: 700;
 } 

@@ -164,24 +164,17 @@ class BMSPartnersApp {
             return false;
         }
         
-        // Se tem menos de 10 dígitos, mostra erro
-        if (value.length < CONFIG.MIN_PHONE_LENGTH) {
+        // Se tem menos de 11 dígitos, mostra erro
+        if (value.length < 11) {
             console.log('validatePhone - muito curto, mostrando erro');
-            this.showFieldError(field, `Telefone deve ter pelo menos ${CONFIG.MIN_PHONE_LENGTH} dígitos`);
-            return false;
-        }
-        
-        // Se tem exatamente 10 dígitos, mostra erro (deve ter 11)
-        if (value.length === 10) {
-            console.log('validatePhone - exatamente 10 dígitos, mostrando erro');
-            this.showFieldError(field, `Telefone deve ter ${CONFIG.MAX_PHONE_LENGTH} dígitos (com o 9)`);
+            this.showFieldError(field, 'O WhatsApp deve ter exatamente 11 dígitos (DDD + número com 9)');
             return false;
         }
         
         // Se tem mais de 11 dígitos, mostra erro
-        if (value.length > CONFIG.MAX_PHONE_LENGTH) {
+        if (value.length > 11) {
             console.log('validatePhone - muito longo, mostrando erro');
-            this.showFieldError(field, `Telefone deve ter no máximo ${CONFIG.MAX_PHONE_LENGTH} dígitos`);
+            this.showFieldError(field, 'O WhatsApp deve ter exatamente 11 dígitos (DDD + número com 9)');
             return false;
         }
 
@@ -505,6 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM carregado, inicializando BMSPartnersApp...');
     const app = new BMSPartnersApp();
     console.log('BMSPartnersApp inicializada:', app);
+    setupVideoCarousel();
 });
 
 // Utilitários
@@ -547,4 +541,35 @@ const Utils = {
             notification.remove();
         }, 3000);
     }
-}; 
+};
+
+// Carrossel de Vídeos
+function setupVideoCarousel() {
+    const videos = [
+        'https://www.youtube.com/embed/ef25iR0liX8?autoplay=1&loop=1&mute=1&playlist=ef25iR0liX8&rel=0',
+        'https://www.youtube.com/embed/Ne6CfvsyoSQ?autoplay=1&loop=1&mute=1&playlist=Ne6CfvsyoSQ&rel=0'
+    ];
+    let current = 0;
+    const left = document.querySelector('.carousel-video--left iframe');
+    const center = document.querySelector('.carousel-video--center iframe');
+    const right = document.querySelector('.carousel-video--right iframe');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+
+    function updateCarousel() {
+        left.src = videos[(current + videos.length - 1) % videos.length].replace('autoplay=1', 'autoplay=0');
+        center.src = videos[current];
+        right.src = videos[(current + 1) % videos.length].replace('autoplay=1', 'autoplay=0');
+    }
+
+    prevBtn.addEventListener('click', () => {
+        current = (current + videos.length - 1) % videos.length;
+        updateCarousel();
+    });
+    nextBtn.addEventListener('click', () => {
+        current = (current + 1) % videos.length;
+        updateCarousel();
+    });
+
+    updateCarousel();
+} 

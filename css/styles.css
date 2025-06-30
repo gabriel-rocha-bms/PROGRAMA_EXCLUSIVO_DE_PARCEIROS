@@ -898,6 +898,7 @@ fieldset {
     align-items: center;
     gap: 12px;
     width: 100%;
+    font-size: 0.95rem;
 }
 
 .contact-method a:hover {
@@ -1101,6 +1102,23 @@ footer {
         grid-template-columns: 1fr;
         gap: 30px;
     }
+    
+    .contact-methods {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .contact-method {
+        padding: 10px;
+        font-size: 0.98rem;
+    }
+    .contact-method a {
+        padding: 10px;
+        font-size: 0.98rem;
+    }
+    .contact-method svg {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1144,11 +1162,27 @@ footer {
     
     .contact-methods {
         grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .contact-method {
+        padding: 8px;
+        font-size: 0.93rem;
+    }
+    .contact-method a {
+        padding: 8px;
+        font-size: 0.93rem;
+    }
+    .contact-method svg {
+        width: 18px;
+        height: 18px;
+    }
+    .contact-method span {
+        word-break: break-all;
+        font-size: 0.93rem;
     }
     
-    .benefits-showcase {
-        padding: 30px 8px;
-        margin: 0 5px;
+    .contact-info h4 {
+        font-size: 1.05rem;
     }
 }
 
@@ -1197,5 +1231,137 @@ footer {
     .floating-badge {
         font-size: 0.9rem;
         padding: 10px 20px;
+    }
+}
+
+/* Video Carousel */
+.video-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.carousel-btn {
+    background: var(--azul-escuro);
+    color: var(--branco);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.carousel-btn:hover {
+    background: var(--laranja-vibrante);
+}
+
+.carousel-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 900px;
+    max-width: 100%;
+    height: 380px;
+}
+
+.carousel-video {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.6s cubic-bezier(.4,2,.6,1), opacity 0.4s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    opacity: 1;
+}
+
+.carousel-video--left {
+    left: 0;
+    opacity: 0.4;
+    filter: blur(1px) grayscale(60%);
+    z-index: 1;
+    width: 320px;
+    height: 180px;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.9) translateX(-40px);
+}
+
+.carousel-video--center {
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+    z-index: 3;
+    width: 640px;
+    height: 360px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+}
+
+.carousel-video--right {
+    right: 0;
+    opacity: 0.4;
+    filter: blur(1px) grayscale(60%);
+    z-index: 1;
+    width: 320px;
+    height: 180px;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.9) translateX(40px);
+}
+
+@media (max-width: 900px) {
+    .carousel-track {
+        width: 100%;
+        height: 220px;
+    }
+    .carousel-video--center {
+        width: 95vw;
+        height: 200px;
+    }
+    .carousel-video--left, .carousel-video--right {
+        width: 40vw;
+        height: 100px;
+    }
+}
+
+.contact-info, .contact-methods, .contact-method {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.contact-method span {
+    word-break: break-word;
+}
+
+@media (max-width: 768px) {
+    .contact-info, .contact-methods, .contact-method {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    .contact-methods {
+        width: 100%;
+        overflow-x: auto;
+    }
+    .contact-method {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info, .contact-methods, .contact-method {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    .contact-methods {
+        width: 100%;
+        overflow-x: auto;
+    }
+    .contact-method {
+        width: 100%;
+        min-width: 0;
     }
 } 

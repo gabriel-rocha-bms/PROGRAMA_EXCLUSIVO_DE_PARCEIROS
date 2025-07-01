@@ -1383,3 +1383,39 @@ footer {
     
     font-weight: 700;
 } 
+
+/* Select: cor cinza claro para placeholder e preto para selecionado */
+select:required:invalid {
+    color: #b0b0b0 !important;
+}
+select {
+    color: #222;
+}
+option[value=""] {
+    color: #b0b0b0;
+}
+
+/* Ajuste de centralização do botão WhatsApp flutuante */
+#ht-ctc-chat .ht_ctc_style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+#ht-ctc-chat a.ctc_s_3 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#ht-ctc-chat svg {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Compensação visual para centralizar o círculo do WhatsApp */
+#ht-ctc-chat svg {
+    margin-left: -12px;
+} 

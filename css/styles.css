@@ -1396,26 +1396,18 @@ option[value=""] {
 }
 
 /* Ajuste de centralização do botão WhatsApp flutuante */
-#ht-ctc-chat .ht_ctc_style {
+.whatsapp-circle {
+    background: #25d366;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 0;
-}
-#ht-ctc-chat a.ctc_s_3 {
-    margin: 0;
-    padding: 0;
-    display: flex;
     justify-content: center;
-    align-items: center;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
 }
-#ht-ctc-chat svg {
+.whatsapp-circle svg {
+    width: 36px !important;
+    height: 36px !important;
     display: block;
-    margin: 0;
-    padding: 0;
 }
-
-/* Compensação visual para centralizar o círculo do WhatsApp */
-#ht-ctc-chat svg {
-    margin-left: -12px;
-} 

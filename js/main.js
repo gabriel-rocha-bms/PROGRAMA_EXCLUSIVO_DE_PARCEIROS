@@ -499,12 +499,12 @@ class BMSPartnersApp {
             {
                 section: document.getElementById('video-bms-partners'),
                 iframeSelector: 'iframe[src*="ef25iR0liX8"]',
-                autoplaySrc: 'https://www.youtube.com/embed/ef25iR0liX8?autoplay=1&loop=1&mute=1&playlist=ef25iR0liX8&rel=0'
+                autoplaySrc: 'https://www.youtube.com/embed/ef25iR0liX8?autoplay=1&mute=1&playlist=ef25iR0liX8&rel=0'
             },
             {
                 section: document.getElementById('video-bms-elite'),
                 iframeSelector: 'iframe[src*="Ne6CfvsyoSQ"]',
-                autoplaySrc: 'https://www.youtube.com/embed/Ne6CfvsyoSQ?autoplay=1&loop=1&mute=1&playlist=Ne6CfvsyoSQ&rel=0'
+                autoplaySrc: 'https://www.youtube.com/embed/Ne6CfvsyoSQ?autoplay=1&mute=1&playlist=Ne6CfvsyoSQ&rel=0'
             }
         ];
 

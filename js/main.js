@@ -23,6 +23,7 @@ class BMSPartnersApp {
         this.setupAnimations();
         this.setupFormSubmission();
         this.updateInstagramLinks();
+        this.setupVideoAutoplay();
     }
 
     // Navbar responsiva
@@ -489,6 +490,44 @@ class BMSPartnersApp {
         const instagramLinks = document.querySelectorAll('a[href*="instagram.com/bmsconsultoria"]');
         instagramLinks.forEach(link => {
             link.href = CONFIG.INSTAGRAM_URL;
+        });
+    }
+
+    setupVideoAutoplay() {
+        // Seleciona todas as sessões de vídeo
+        const videoSections = [
+            {
+                section: document.getElementById('video-bms-partners'),
+                iframeSelector: 'iframe[src*="ef25iR0liX8"]',
+                autoplaySrc: 'https://www.youtube.com/embed/ef25iR0liX8?autoplay=1&loop=1&mute=1&playlist=ef25iR0liX8&rel=0'
+            },
+            {
+                section: document.getElementById('video-bms-elite'),
+                iframeSelector: 'iframe[src*="Ne6CfvsyoSQ"]',
+                autoplaySrc: 'https://www.youtube.com/embed/Ne6CfvsyoSQ?autoplay=1&loop=1&mute=1&playlist=Ne6CfvsyoSQ&rel=0'
+            }
+        ];
+
+        videoSections.forEach(({ section, iframeSelector, autoplaySrc }) => {
+            if (!section) return;
+            const iframe = section.querySelector(iframeSelector);
+            if (!iframe) return;
+
+            // Remove autoplay do src inicial para evitar autoplay antes da hora
+            let originalSrc = iframe.src.replace('autoplay=1', 'autoplay=0');
+            iframe.src = originalSrc;
+
+            let played = false;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !played) {
+                        iframe.src = autoplaySrc;
+                        played = true;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            observer.observe(section);
         });
     }
 }
